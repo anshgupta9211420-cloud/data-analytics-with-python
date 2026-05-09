@@ -1,0 +1,189 @@
+# #Pandas : it is an open source python library used to for manipulate and analysis the data. 
+import pandas as pd
+# # print(pd.__version__)
+
+# #DataFrame: it is the combination of table 
+# df= pd.DataFrame([1,2,3], columns=["cols"] )
+# print(df)
+# print(type(df))
+
+
+data={
+    "Name": ["Garima","Ansh","Adarsh","Dibbi"],
+    "Age": [19,20,21,23],
+    "Salary": [90000,89000,50000,1200000]
+
+
+}
+df=pd.DataFrame(data)
+# print(df)
+
+
+#Basic dataframe Understanding
+# print(df.head(2)) #top rows
+# print(df.tail(3)) #last rows
+
+# print(df.shape)
+# print(df.columns)
+
+# df1=df.rename(columns={"Salary":"Monthly_salary"})
+# print(df1)
+
+# print(df.info())
+
+# print(df.describe())
+
+
+#save and load the data from csv
+
+# df.to_csv("test_data.csv",index=False)  #export data frame
+
+# load= pd.read_csv("test_data.csv") #import data frame
+# print(load)
+
+#rows & columns selection
+# print(df[["Name"]])
+# print(df[["Name","Age"]])
+
+# #select rows 
+# print(df.loc[(df.Name=="Garima")])   
+
+# a=df.loc[(df.Name=="Ansh")  &(df.Age==20)]
+# print(a)
+
+# #index selection 
+# print(df.iloc[0])
+# print(df.iloc[0:2]) #2 is not included  [start:stop:step]
+
+#  #filter dataframe
+# print(df["Age"]>19 )
+
+# df_age_filter=df[df["Age"]>19] 
+# print(df_age_filter)
+
+# df_age_salary_filter = df[(df["Age"]>=20) & (df["Salary"]>20000)]
+# print(df_age_salary_filter)
+
+# print(df.where(df["Age"]>=20 ,other="Not elegible" ) )
+
+# #rows and columns operations( add, update , delete  )
+# #add columns
+# df["City"] = ["Sambhal","Sambhal","Bijnor","Hajibera"]
+# print(df)
+
+# df["Bonus"]= df["Salary"] *0.2
+# print(df)
+
+#add row
+# df.loc[len(df)]=["Abc",22,100000,20000]
+# print(df)
+
+
+#update value using index method
+# df.loc[0,"Salary"]=220000
+# print(df)
+
+#update value using column value 
+# df.loc[df.Name=='Garima',"Age"]=18
+# print(df)
+
+#delete value
+# df= df.drop(df[df.Name=="Abc"].index)   #drop row ,axis=0
+# print(df)
+# df.drop(1,axis=0)   # ddelete by index
+
+# df.drop("Bonus",axis=1 , inplace=True)          #drop column,axis=1
+# print(df)              
+
+#multiple drop
+# df.drop("Bonus","Salary" ,axis=1 , inplace=True) 
+
+
+#sort value
+# df.sort_values('Age',ascending=False,inplace=True)
+# print(df)
+
+
+#Working with date values
+
+df["DOB"]=["14-12-2007","11-02-2006","12-03-2003","04-07-2007"]
+print(df)
+print(df["DOB"].dtype)
+
+# df["DOB"]=pd.to_datetime(df["DOB"])
+# print(df["DOB"].dtype)
+
+# print(df["DOB"].dt.year)
+# print(df["DOB"].dt.month)
+# print(df["DOB"].dt.day)
+# print(df["DOB"].dt.day_name())
+
+
+
+# df["MONTH"]=df["DOB"].dt.month
+# print(df)
+
+# #handling missing values
+# print(df.isnull())
+
+# import numpy as np
+
+# df.loc[df.Name=="Dibbi","Salary"]=np.nan
+# print(df)
+# print(df.isnull())
+
+# print(df.isnull().sum())
+
+# print(df.fillna(0))
+
+
+
+#aggregreation and group by
+
+
+# print(df['Name'].value_counts)
+
+# print(df.groupby("Age")["Salary"].sum())
+
+
+#concatnate and merge dataframe(Joins)
+
+df1=pd.DataFrame({
+        "ID":[101,102,103],
+        "Score": [100,22,97],
+        "Name":["A","B","C"]
+})
+
+df2=pd.DataFrame({
+                "ID": [101,102,106,107,108],
+                "Score":[23,44,55,66,66]
+
+})
+print(df1)
+print(df2)
+
+a=pd.concat([df1,df2])
+print(a) 
+
+b=pd.concat([df1,df2],axis=1)
+print(b)
+
+
+#merge =join
+
+c=pd.merge(df1,df2 , how="inner",on="ID")
+print(c)
+
+print(pd.merge(df1,df2 , how="left",on="ID"))
+
+print(pd.merge(df1,df2 , how="right",on="ID"))
+print(pd.merge(df1,df2 , how="outer",on="ID"))
+
+c=pd.merge(df1,df2 , how="inner",left_on="ID",right_on="ID")
+print(c)
+
+
+
+
+
+
